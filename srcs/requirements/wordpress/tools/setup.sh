@@ -4,14 +4,13 @@ sleep 10
 cd /var/www/wordpress
 
 if [ ! -f "wp-config.php" ]; then
-
     wp core download --allow-root || true
     
     wp config create --allow-root \
         --dbname="$MYSQL_DATABASE" \
         --dbuser="$MYSQL_USER" \
         --dbpass="$(cat /run/secrets/db_password)" \
-        --dbhost="mariadb:3306" --force
+        --dbhost="mariadb:3306" --skip-check --force
 
     wp core install --allow-root \
         --url="https://$DOMAIN_NAME" \
